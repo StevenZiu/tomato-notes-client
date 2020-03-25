@@ -4,6 +4,7 @@ import Footer from "../../components/Footer"
 import Home from "../Home"
 import Auth from "../Auth"
 import { Route, Switch } from "react-router-dom"
+import "./style.scss"
 class BasicLayout extends React.Component {
   render() {
     return (

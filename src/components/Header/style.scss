@@ -1,11 +1,13 @@
 .header-content {
   padding: 15px;
-  border-bottom: 1px solid gray;
-  background: transparent;
+  // border-bottom: 1px solid gray;
+  background: lightgrey;
   .link-group {
     text-align: right;
     a {
       margin-left: 10px;
+      color: #000;
+      font-weight: 400;
     }
   }
 }
