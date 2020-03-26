@@ -2,6 +2,9 @@ import React from "react"
 import "./style.scss"
 import { Button } from "antd"
 class Timer extends React.Component {
+  state = {
+    timerStatus: "stop"
+  }
   // props controlled
   TIME_LIMIT = this.props.timeLimit || 1500
   // property for timer
@@ -30,6 +33,7 @@ class Timer extends React.Component {
 
   onTimesUp = () => {
     clearInterval(this.timerInterval)
+    this.setState({ timerStatus: "stop" })
   }
 
   onReset = () => {
@@ -43,14 +47,20 @@ class Timer extends React.Component {
     document.getElementById("base-timer-label").innerHTML = this.formatTime(
       this.timeLeft
     )
+    this.setState({ timerStatus: "stop" })
   }
   onPause = () => {
     if (this.timerInterval !== null) {
+      this.setState({ timerStatus: "pause" })
       clearInterval(this.timerInterval)
     }
   }
 
   startTimer = () => {
+    this.setState({ timerStatus: "start" })
+    if (this.timerInterval !== null) {
+      clearInterval(this.timerInterval)
+    }
     this.timerInterval = setInterval(() => {
       this.timePassed = this.timePassed += 1
       this.timeLeft = this.TIME_LIMIT - this.timePassed
@@ -147,7 +157,11 @@ class Timer extends React.Component {
           </span>
         </div>
         <div className="button-group">
-          <Button type="primary" onClick={this.startTimer}>
+          <Button
+            type="primary"
+            onClick={this.startTimer}
+            disabled={this.state.timerStatus === "start"}
+          >
             Start
           </Button>
           <Button danger onClick={this.onPause}>
