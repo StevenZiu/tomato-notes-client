@@ -3,6 +3,7 @@ import Header from "../../components/Header"
 import Footer from "../../components/Footer"
 import Home from "../Home"
 import Auth from "../Auth"
+import Player from "../../components/Player"
 import { Route, Switch } from "react-router-dom"
 import "./style.scss"
 class BasicLayout extends React.Component {
@@ -17,6 +18,7 @@ class BasicLayout extends React.Component {
             <Route exact path="/register" component={Auth}></Route>
           </Switch>
         </div>
+        <Player size="small" position="br" />
       </div>
     )
   }

@@ -1,0 +1,18 @@
+.player.br {
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+}
+
+.player.bl {
+  position: fixed;
+  bottom: 10px;
+  left: 10px;
+}
+.player {
+  .player-title {
+    display: inline-block;
+    margin-bottom: 10px;
+    margin-right: 10px;
+  }
+}
