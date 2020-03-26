@@ -6,7 +6,7 @@ class Timer extends React.Component {
     timerStatus: "stop"
   }
   // props controlled
-  TIME_LIMIT = this.props.timeLimit || 11
+  TIME_LIMIT = this.props.timeLimit || 1500
   // property for timer
   FULL_DASH_ARRAY = 283
   WARNING_THRESHOLD = 10
