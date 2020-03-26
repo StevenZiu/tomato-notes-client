@@ -1,3 +1,4 @@
+@import "../../styles/colors.scss";
 .timer {
   .button-group {
     text-align: center;
@@ -38,15 +39,15 @@
 }
 
 .base-timer__path-remaining.green {
-  color: rgb(65, 184, 131);
+  color: $color_deepgreen;
 }
 
 .base-timer__path-remaining.orange {
-  color: orange;
+  color: $color_lightred;
 }
 
 .base-timer__path-remaining.red {
-  color: red;
+  color: $color_red;
 }
 
 .base-timer__label {

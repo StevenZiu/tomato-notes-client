@@ -6,7 +6,7 @@ class Timer extends React.Component {
     timerStatus: "stop"
   }
   // props controlled
-  TIME_LIMIT = this.props.timeLimit || 1500
+  TIME_LIMIT = this.props.timeLimit || 11
   // property for timer
   FULL_DASH_ARRAY = 283
   WARNING_THRESHOLD = 10
@@ -37,13 +37,13 @@ class Timer extends React.Component {
   }
 
   onReset = () => {
-    if (this.timerInterval !== null) {
-      clearInterval(this.timerInterval)
-    }
+    clearInterval(this.timerInterval)
     this.timePassed = 0
     this.timeLeft = this.TIME_LIMIT
     this.timerInterval = null
-    this.remainingPathColor = this.COLOR_CODES.info.color
+    // this.remainingPathColor = this.COLOR_CODES.info.color
+    this.setRemainingPathColor(this.timeLeft)
+    this.setCircleDasharray()
     document.getElementById("base-timer-label").innerHTML = this.formatTime(
       this.timeLeft
     )
@@ -57,23 +57,39 @@ class Timer extends React.Component {
   }
 
   startTimer = () => {
-    this.setState({ timerStatus: "start" })
-    if (this.timerInterval !== null) {
-      clearInterval(this.timerInterval)
-    }
-    this.timerInterval = setInterval(() => {
-      this.timePassed = this.timePassed += 1
-      this.timeLeft = this.TIME_LIMIT - this.timePassed
-      document.getElementById("base-timer-label").innerHTML = this.formatTime(
-        this.timeLeft
-      )
-      this.setCircleDasharray()
-      this.setRemainingPathColor(this.timeLeft)
+    if (this.state.timerStatus === "stop") {
+      this.setState({ timerStatus: "start" })
+      this.onReset()
+      this.timerInterval = setInterval(() => {
+        this.timePassed = this.timePassed += 1
+        this.timeLeft = this.TIME_LIMIT - this.timePassed
+        document.getElementById("base-timer-label").innerHTML = this.formatTime(
+          this.timeLeft
+        )
+        this.setCircleDasharray()
+        this.setRemainingPathColor(this.timeLeft)
 
-      if (this.timeLeft === 0) {
-        this.onTimesUp(this.timerInterval)
-      }
-    }, 1000)
+        if (this.timeLeft === 0) {
+          this.onTimesUp(this.timerInterval)
+        }
+      }, 1000)
+    } else if (this.state.timerStatus === "pause") {
+      this.setState({ timerStatus: "start" })
+      clearInterval(this.timerInterval)
+      this.timerInterval = setInterval(() => {
+        this.timePassed = this.timePassed += 1
+        this.timeLeft = this.TIME_LIMIT - this.timePassed
+        document.getElementById("base-timer-label").innerHTML = this.formatTime(
+          this.timeLeft
+        )
+        this.setCircleDasharray()
+        this.setRemainingPathColor(this.timeLeft)
+
+        if (this.timeLeft === 0) {
+          this.onTimesUp(this.timerInterval)
+        }
+      }, 1000)
+    }
   }
 
   formatTime = time => {
@@ -103,16 +119,26 @@ class Timer extends React.Component {
       document
         .getElementById("base-timer-path-remaining")
         .classList.add(warning.color)
+    } else {
+      document
+        .getElementById("base-timer-path-remaining")
+        .classList.remove(alert.color)
+      document
+        .getElementById("base-timer-path-remaining")
+        .classList.remove(warning.color)
+      document
+        .getElementById("base-timer-path-remaining")
+        .classList.add(info.color)
     }
   }
 
-  alculateTimeFraction = timeLeft => {
-    const rawTimeFraction = timeLeft / this.TIME_LIMIT
+  alculateTimeFraction = () => {
+    const rawTimeFraction = this.timeLeft / this.TIME_LIMIT
     return rawTimeFraction - (1 / this.TIME_LIMIT) * (1 - rawTimeFraction)
   }
 
-  calculateTimeFraction = timeLeft => {
-    const rawTimeFraction = timeLeft / this.TIME_LIMIT
+  calculateTimeFraction = () => {
+    const rawTimeFraction = this.timeLeft / this.TIME_LIMIT
     return rawTimeFraction - (1 / this.TIME_LIMIT) * (1 - rawTimeFraction)
   }
   setCircleDasharray = () => {
