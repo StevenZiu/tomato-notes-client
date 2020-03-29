@@ -10,7 +10,9 @@ class Home extends React.Component {
           <Col className="title" col={24}>
             <span className="main-title">Welcome to Tomato Notes!</span> <br />
             <span className="sub-title">
-              Create your project and get all the tomatoes in. <br />
+              25 minutes equals 1 tomato, and with one tomato you can do a lot
+              of things.
+              <br />
               Click{" "}
               <a
                 href="https://en.wikipedia.org/wiki/Pomodoro_Technique"
@@ -18,7 +20,7 @@ class Home extends React.Component {
               >
                 here
               </a>{" "}
-              to know what's Tomato.
+              to know what's Tomato (Pomodoro Technique).
             </span>
           </Col>
         </Row>
