@@ -1,6 +1,7 @@
 import React from "react"
 import Timer from "../../components/Timer"
 import { Col, Row, Divider } from "antd"
+import TomatoForm from "../../components/TomatoForm"
 import "./style.scss"
 class Home extends React.Component {
   render() {
@@ -30,7 +31,8 @@ class Home extends React.Component {
             <Timer></Timer>
           </Col>
           <Col sm={12} col={24}>
-            Form placeholder to submit the tomato
+            <p className="form-title">Create new Tomato</p>
+            <TomatoForm />
           </Col>
         </Row>
       </div>
