@@ -2,11 +2,11 @@ import React from "react"
 import { Form, Input, Button, Checkbox, Select } from "antd"
 import { InfoCircleOutlined, UserOutlined } from "@ant-design/icons"
 import "./style.scss"
-
+import { is } from "ramda"
+import moment from "moment"
 const TomatoForm = props => {
   // decide the form type
   const isUpdate = props.isUpdate || false
-
   const layout = {
     labelCol: {
       span: 6
@@ -33,7 +33,14 @@ const TomatoForm = props => {
   const onReset = () => {
     form.resetFields()
   }
-
+  console.log(props)
+  form.setFieldsValue({
+    startAt: props.startAt !== undefined ? props.startAt : "0",
+    endAt: props.endAt !== undefined ? props.endAt : "0",
+    tomatoTitle: isUpdate ? props.tomatoTitle : "",
+    tomatoDescription: isUpdate ? props.tomatoDescription : "",
+    projectId: isUpdate ? props.projectId : "null"
+  })
   return (
     <Form
       {...layout}
@@ -47,11 +54,7 @@ const TomatoForm = props => {
         name="startAt"
         rules={[{ required: true, message: "required" }]}
       >
-        <Input
-          disabled
-          defaultValue={isUpdate ? props.startAt : ""}
-          value={props.startAt}
-        />
+        <Input disabled />
       </Form.Item>
 
       <Form.Item
@@ -59,11 +62,7 @@ const TomatoForm = props => {
         name="endAt"
         rules={[{ required: true, message: "required" }]}
       >
-        <Input
-          disabled
-          defaultValue={isUpdate ? props.endAt : ""}
-          value={props.endAt}
-        />
+        <Input disabled />
       </Form.Item>
       <Form.Item
         label="Title"
@@ -74,11 +73,7 @@ const TomatoForm = props => {
           { max: 50, message: "length should be 5 to 50 characters." }
         ]}
       >
-        <Input
-          placeholder="Tomato Title"
-          allowClear
-          defaultValue={isUpdate ? props.tomatoTitle : ""}
-        />
+        <Input placeholder="Tomato Title" allowClear />
       </Form.Item>
       <Form.Item
         label="Description"
@@ -93,7 +88,6 @@ const TomatoForm = props => {
         <Input.TextArea
           placeholder="tomato record description"
           allowClear
-          defaultValue={isUpdate ? props.tomatoDescription : ""}
           autoSize={{ minRows: 6 }}
         ></Input.TextArea>
       </Form.Item>
@@ -106,7 +100,7 @@ const TomatoForm = props => {
         {/*
         TODO: get project from state, and use selector to select the project, if no project should be null
       */}
-        <Select defaultValue={isUpdate ? props.projectId : "null"}>
+        <Select>
           <Select.Option value="null">Null</Select.Option>
         </Select>
       </Form.Item>

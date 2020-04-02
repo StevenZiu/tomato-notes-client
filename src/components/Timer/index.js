@@ -34,6 +34,8 @@ class Timer extends React.Component {
   onTimesUp = () => {
     clearInterval(this.timerInterval)
     this.setState({ timerStatus: "stop" })
+    const date = new Date()
+    this.props.end(date.getTime())
   }
 
   onReset = () => {
@@ -48,11 +50,14 @@ class Timer extends React.Component {
       this.timeLeft
     )
     this.setState({ timerStatus: "stop" })
+    this.props.reset()
   }
   onPause = () => {
     if (this.timerInterval !== null) {
       this.setState({ timerStatus: "pause" })
       clearInterval(this.timerInterval)
+      const date = new Date()
+      this.props.end(date.getTime())
     }
   }
 
@@ -73,6 +78,8 @@ class Timer extends React.Component {
           this.onTimesUp(this.timerInterval)
         }
       }, 1000)
+      const date = new Date()
+      this.props.start(date.getTime())
     } else if (this.state.timerStatus === "pause") {
       this.setState({ timerStatus: "start" })
       clearInterval(this.timerInterval)

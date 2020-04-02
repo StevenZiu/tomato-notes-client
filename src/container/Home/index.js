@@ -3,7 +3,23 @@ import Timer from "../../components/Timer"
 import { Col, Row, Divider } from "antd"
 import TomatoForm from "../../components/TomatoForm"
 import "./style.scss"
+import { TagsOutlined } from "@ant-design/icons"
 class Home extends React.Component {
+  state = {
+    start: "",
+    end: ""
+  }
+  timerStart = startTimeStamp => {
+    console.log(startTimeStamp)
+    this.setState({ ...this.state, start: startTimeStamp })
+  }
+  timerEnd = endTimeStamp => {
+    console.log(endTimeStamp)
+    this.setState({ ...this.state, end: endTimeStamp })
+  }
+  timerReset = () => {
+    this.setState({ ...this.state, start: "", end: "" })
+  }
   render() {
     return (
       <div className="home-container">
@@ -28,11 +44,19 @@ class Home extends React.Component {
         <Divider />
         <Row type="flex">
           <Col sm={12} col={24}>
-            <Timer></Timer>
+            <Timer
+              start={this.timerStart}
+              end={this.timerEnd}
+              reset={this.timerReset}
+            ></Timer>
           </Col>
           <Col sm={12} col={24}>
             <p className="form-title">Create new Tomato</p>
-            <TomatoForm />
+            <TomatoForm
+              startAt={this.state.start}
+              endAt={this.state.end}
+              isUpdate={false}
+            />
           </Col>
         </Row>
       </div>
