@@ -1,9 +1,11 @@
 import React from "react"
+import { useEffect } from "react"
 import { Form, Input, Button, Checkbox, Select } from "antd"
 import { InfoCircleOutlined, UserOutlined } from "@ant-design/icons"
 import "./style.scss"
 import { is } from "ramda"
-import moment from "moment"
+import { timeConverter } from "../../utils/parseTimestamp"
+
 const TomatoForm = props => {
   // decide the form type
   const isUpdate = props.isUpdate || false
@@ -33,14 +35,37 @@ const TomatoForm = props => {
   const onReset = () => {
     form.resetFields()
   }
-  console.log(props)
-  form.setFieldsValue({
-    startAt: props.startAt !== undefined ? props.startAt : "0",
-    endAt: props.endAt !== undefined ? props.endAt : "0",
-    tomatoTitle: isUpdate ? props.tomatoTitle : "",
-    tomatoDescription: isUpdate ? props.tomatoDescription : "",
-    projectId: isUpdate ? props.projectId : "null"
-  })
+
+  const initValues = isUpdate
+    ? {
+        startAt: props.startAt,
+        endAt: props.endAt,
+        tomatoTitle: props.tomatoTitle,
+        tomatoDescription: props.tomatoDescription,
+        projectId: props.projectId
+      }
+    : {
+        startAt: props.startAt ? props.startAt : "",
+        endAt: props.endAt ? props.endAt : "",
+        tomatoTitle: "",
+        tomatoDescription: "",
+        projectId: "null"
+      }
+
+  // update start at and end at according to props change
+  useEffect(() => {
+    if (props.startAt !== "") {
+      form.setFieldsValue({ startAt: timeConverter(props.startAt) })
+    } else {
+      form.setFieldsValue({ startAt: "" })
+    }
+    if (props.endAt !== "") {
+      form.setFieldsValue({ endAt: timeConverter(props.endAt) })
+    } else {
+      form.setFieldsValue({ endAt: "" })
+    }
+  }, [props.startAt, props.endAt])
+
   return (
     <Form
       {...layout}
@@ -48,6 +73,7 @@ const TomatoForm = props => {
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}
       form={form}
+      initialValues={initValues}
     >
       <Form.Item
         label="Started At"

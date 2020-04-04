@@ -52,6 +52,7 @@ class Timer extends React.Component {
     this.setState({ timerStatus: "stop" })
     this.props.reset()
   }
+
   onPause = () => {
     if (this.timerInterval !== null) {
       this.setState({ timerStatus: "pause" })
@@ -63,7 +64,6 @@ class Timer extends React.Component {
 
   startTimer = () => {
     if (this.state.timerStatus === "stop") {
-      this.setState({ timerStatus: "start" })
       this.onReset()
       this.timerInterval = setInterval(() => {
         this.timePassed = this.timePassed += 1
@@ -80,8 +80,8 @@ class Timer extends React.Component {
       }, 1000)
       const date = new Date()
       this.props.start(date.getTime())
-    } else if (this.state.timerStatus === "pause") {
       this.setState({ timerStatus: "start" })
+    } else if (this.state.timerStatus === "pause") {
       clearInterval(this.timerInterval)
       this.timerInterval = setInterval(() => {
         this.timePassed = this.timePassed += 1
@@ -96,6 +96,7 @@ class Timer extends React.Component {
           this.onTimesUp(this.timerInterval)
         }
       }, 1000)
+      this.setState({ timerStatus: "start" })
     }
   }
 
@@ -197,7 +198,11 @@ class Timer extends React.Component {
           >
             Start
           </Button>
-          <Button danger onClick={this.onPause}>
+          <Button
+            danger
+            onClick={this.onPause}
+            disabled={this.state.timerStatus === "pause"}
+          >
             Stop
           </Button>
           <Button type="default" onClick={this.onReset}>
