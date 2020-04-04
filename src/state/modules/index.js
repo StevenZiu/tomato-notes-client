@@ -1,3 +1,3 @@
 import { loading } from "./loading/reducers"
-
-export default { loading }
+import auth from "./auth/reducers"
+export default { loading, auth }
