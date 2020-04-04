@@ -78,7 +78,9 @@ const TomatoForm = props => {
       <Form.Item
         label="Started At"
         name="startAt"
-        rules={[{ required: true, message: "required" }]}
+        rules={[
+          { required: true, message: "required, click the timer to start" }
+        ]}
       >
         <Input disabled />
       </Form.Item>
@@ -86,7 +88,9 @@ const TomatoForm = props => {
       <Form.Item
         label="End At"
         name="endAt"
-        rules={[{ required: true, message: "required" }]}
+        rules={[
+          { required: true, message: "required, click the timer to start" }
+        ]}
       >
         <Input disabled />
       </Form.Item>
@@ -109,7 +113,6 @@ const TomatoForm = props => {
           { min: 50, message: "length should be 50 to 1000 characters." },
           { max: 1000, message: "length should be 50 to 1000 characters." }
         ]}
-        help="Describe what you did during this tomato time slot, note down everything."
       >
         <Input.TextArea
           placeholder="tomato record description"

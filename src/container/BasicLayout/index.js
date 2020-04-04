@@ -18,7 +18,7 @@ class BasicLayout extends React.Component {
             <Route exact path="/register" component={Auth}></Route>
           </Switch>
         </div>
-        <Player size="small" position="br" />
+        <Player size="small" position="bl" />
       </div>
     )
   }
